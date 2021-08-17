@@ -17,7 +17,8 @@ module Twitter
     attr_reader :description, :email, :lang, :location, :name,
                 :profile_background_color, :profile_link_color,
                 :profile_sidebar_border_color, :profile_sidebar_fill_color,
-                :profile_text_color, :time_zone
+                :profile_text_color, :time_zone, :username,
+                :profile_image_url
     alias favorites_count favourites_count
     alias tweets_count statuses_count
     object_attr_reader :Tweet, :status, :user

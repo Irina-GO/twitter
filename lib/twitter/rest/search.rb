@@ -33,6 +33,21 @@ module Twitter
         request = Twitter::REST::Request.new(self, :get, '/1.1/search/tweets.json', options.merge(q: query))
         Twitter::SearchResults.new(request)
       end
+
+      # Returns tweets that match a specified query.
+      #
+      # @see https://developer.twitter.com/en/docs/twitter-api/tweets/search/introduction
+      # @rate_limited Yes
+      # @authentication Requires user context
+      # @raise [Twitter::Error::Unauthorized] Error raised when supplied user credentials are not valid.
+      # @param query [String] A search term.
+      # @param options [Hash] A customizable set of options.
+      # @return [Twitter::SearchResults] Return tweets that match a specified query with search metadata
+      def search_tweets(query, options = {})
+        options = options.dup
+        request = Twitter::REST::Request.new(self, :get, '/2/tweets/search/recent', options.merge("query"=> query))
+        Twitter::SearchResults.new(request)
+      end
     end
   end
 end

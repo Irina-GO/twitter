@@ -45,8 +45,24 @@ module Twitter
       #   @option options [Boolean, String, Integer] :exclude_replies This parameter will prevent replies from appearing in the returned timeline. Using exclude_replies with the count parameter will mean you will receive up-to count tweets - this is because the count parameter retrieves that many tweets before filtering out retweets and replies.
       #   @option options [Boolean, String, Integer] :contributor_details Specifies that the contributors element should be enhanced to include the screen_name of the contributor.
       #   @option options [Boolean, String, Integer] :include_rts Specifies that the timeline should include native retweets in addition to regular tweets. Note: If you're using the trim_user parameter in conjunction with include_rts, the retweets will no longer contain a full user object.
-      def user_timeline(*args)
-        objects_from_response_with_user(Twitter::Tweet, :get, '/1.1/statuses/user_timeline.json', args)
+      # def user_timeline(*args)
+      #   objects_from_response_with_user(Twitter::Tweet, :get, '/1.1/statuses/user_timeline.json', args)
+      # end
+
+      # Returns tweets composed by a single user, specified by the requested user ID.
+      #
+      # @see https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets
+      # @note This method can only return up to 3,200 Tweets.
+      # @rate_limited Yes
+      # @authentication Requires user context
+      # @raise [Twitter::Error::Unauthorized] Error raised when supplied user credentials are not valid.
+       # @return [Twitter::SearchResults] Return tweets that match a specified query with search metadata
+      # @overload user_timeline(user, options = {})
+      #   @param user [Integer, String, Twitter::User] A Twitter user ID, screen name, URI, or object.
+      #   @param options [Hash] A customizable set of options.
+      def user_timeline(user_id, args)
+        request = Twitter::REST::Request.new(self, :get, "/2/users/#{user_id}/tweets", args)
+        Twitter::SearchResults.new(request)
       end
 
       # Returns the 20 most recent retweets posted by the specified user
