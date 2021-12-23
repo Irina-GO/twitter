@@ -43,6 +43,12 @@ module Twitter
         perform_request(:post, path, options)
       end
 
+      # @param path [String]
+      # @param options [Hash]
+      def perform_put(path, options = {})
+        perform_request(:put, path, options)
+      end
+
       # @param request_method [Symbol]
       # @param path [String]
       # @param options [Hash]

@@ -9,7 +9,7 @@ module Twitter
       @request_method = request_method.to_sym
       @uri = Addressable::URI.parse(url)
       @bearer_token_request = options.delete(:bearer_token_request)
-      @options = options
+      @options = options unless request_method==:put
     end
 
     def bearer_token_request?
@@ -27,6 +27,7 @@ module Twitter
         headers[:accept]        = '*/*'
         headers[:authorization] = bearer_token_credentials_auth_header
       else
+        headers[:content_type] ='application/json'
         headers[:authorization] = auth_header
       end
       headers

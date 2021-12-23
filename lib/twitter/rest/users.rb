@@ -418,6 +418,18 @@ module Twitter
         perform_get_with_cursor('/1.1/mutes/users/ids.json', arguments.options, :ids)
       end
 
+      # Returns information about an authorized user.
+      #
+      # @see https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-me
+      # @rate_limited Yes
+      # @authentication Requires OAuth 1.0a User Context or OAuth 2.0 Authorization Code with PKCE
+      # @raise [Twitter::Error::Unauthorized] Error raised when supplied user credentials are not valid.
+      # @return [Twitter::User] The authenticated user.
+      # @param options [Hash] A customizable set of options.
+      def authorized_user(options = {})
+        perform_get_with_object("/2/users/me", options, Twitter::User)
+      end
+
     private
 
       def post_profile_image(path, image, options)

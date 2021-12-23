@@ -29,7 +29,7 @@ module Twitter
         set_multipart_options!(request_method, multipart_options)
         @path = uri.path
         @options = options
-        @options_key = {get: :params, json_post: :json, json_put: :json, delete: :params}[request_method] || :form
+        @options_key = {get: :params, json_post: :json, json_put: :json, delete: :params, put: :json}[request_method] || :form
         @params = params
       end
 

@@ -323,6 +323,29 @@ module Twitter
         end.compact
       end
 
+      # Hides or unhides a reply to a Tweet.
+      #
+      # @see https://developer.twitter.com/en/docs/twitter-api/tweets/hide-replies/api-reference/put-tweets-id-hidden#requests
+      # @rate_limited Yes
+      # @authentication Requires user context
+      # @raise [Twitter::Error::Unauthorized] Error raised when supplied user credentials are not valid.
+      # @return [Hash]
+      # @param tweet_id [String] Unique identifier of the Tweet to hide or unhide. The Tweet must belong to a conversation initiated by the authenticating user.
+      # @param hidden [Boolean] Indicates the action to perform. Specify true to hide the Tweet, false to unhide
+      def hide(tweet_id, hidden)
+        perform_put("/2/tweets/#{tweet_id}/hidden", {:hidden => hidden})
+      end
+
+      # Returns Tweet
+      #
+      # @see https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id
+      # @rate_limited Yes
+      # @authentication Required
+      # @return [Twitter::Tweet] The requested Tweet.
+      def lookup_tweet(id, options = {})
+        perform_get_with_object("/2/tweets/#{id}", options, Twitter::Tweet)
+      end
+
     private
 
       def array_wrap(object)

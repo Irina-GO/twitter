@@ -7,7 +7,7 @@ module Twitter
     include Twitter::Creatable
     include Twitter::Entities
     # @return [String]
-    attr_reader :filter_level, :in_reply_to_screen_name, :lang, :source, :text
+    attr_reader :filter_level, :in_reply_to_screen_name, :lang, :source, :text, :conversation_id, :author_id
     # @return [Integer]
     attr_reader :favorite_count, :in_reply_to_status_id, :in_reply_to_user_id,
                 :quote_count, :reply_count, :retweet_count
@@ -34,6 +34,7 @@ module Twitter
     # @param attrs [Hash]
     # @return [Twitter::Tweet]
     def initialize(attrs = {})
+      attrs = attrs[:data] if attrs[:data]
       attrs[:text] = attrs[:full_text] if attrs[:text].nil? && !attrs[:full_text].nil?
       super
     end
